@@ -39,9 +39,8 @@ flags.DEFINE_string(
     "output_file", None,
     "Output TF example file (or comma-separated list of files).")
 
-flags.DEFINE_string(
-    "vocab_file", None,
-    "The vocabulary file that the ALBERT model was trained on.")
+flags.DEFINE_string("vocab_file", None,
+                    "The vocabulary file that the ALBERT model was trained on.")
 
 flags.DEFINE_string("spm_model_file", None,
                     "The model file for sentence piece tokenization.")
@@ -78,8 +77,9 @@ flags.DEFINE_integer("max_predictions_per_seq", 20,
 
 flags.DEFINE_integer("random_seed", 12345, "Random seed for data generation.")
 
+# initial parameter is 40, too much for tra-chinese, choose 5 instead.
 flags.DEFINE_integer(
-    "dupe_factor", 40,
+    "dupe_factor", 5,
     "Number of times to duplicate the input data (with different masks).")
 
 flags.DEFINE_float("masked_lm_prob", 0.15, "Masked LM probability.")
@@ -88,6 +88,11 @@ flags.DEFINE_float(
     "short_seq_prob", 0.1,
     "Probability of creating sequences which are shorter than the "
     "maximum length.")
+
+flags.DEFINE_bool(
+    "use_comp_tokenizer", True,
+    "Use Component tokenizer to pre-train Comp-ALBERT."
+)
 
 
 class TrainingInstance(object):
@@ -617,8 +622,15 @@ def truncate_seq_pair(tokens_a, tokens_b, max_num_tokens, rng):
 def main(_):
   tf.logging.set_verbosity(tf.logging.INFO)
 
-  tokenizer = tokenization.FullTokenizer(
-      vocab_file=FLAGS.vocab_file, do_lower_case=FLAGS.do_lower_case,
+  if FLAGS.use_comp_tokenizer:
+    tokenizer =tokenization.CompTokenizer(
+      vocab_file=FLAGS.vocab_file,
+      do_lower_case=FLAGS.do_lower_case,
+      spm_model_file=FLAGS.spm_model_file)
+  else:
+    tokenizer = tokenization.FullTokenizer(
+      vocab_file=FLAGS.vocab_file,
+      do_lower_case=FLAGS.do_lower_case,
       spm_model_file=FLAGS.spm_model_file)
 
   input_files = []

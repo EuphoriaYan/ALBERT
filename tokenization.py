@@ -510,3 +510,106 @@ def _is_punctuation(char):
   if cat.startswith("P"):
     return True
   return False
+
+class CompTokenizer(object):
+  """Runs end-to-end tokenziation."""
+
+  def __init__(self, vocab_file, do_lower_case=True):
+    self.vocab = load_vocab(vocab_file)
+    self.inv_vocab = {v: k for k, v in self.vocab.items()}
+    self.basic_tokenizer = BasicTokenizer(do_lower_case=do_lower_case)
+    self.comppiece_tokenizer = CompPieceTokenizer(vocab=self.vocab)
+
+  def tokenize(self, text):
+    split_tokens = []
+    for token in self.basic_tokenizer.tokenize(text):
+      for sub_token in self.comppiece_tokenizer.tokenize(token):
+        split_tokens.append(sub_token)
+
+    return split_tokens
+
+  def convert_tokens_to_ids(self, tokens):
+    return convert_by_vocab(self.vocab, tokens)
+
+  def convert_ids_to_tokens(self, ids):
+    return convert_by_vocab(self.inv_vocab, ids)
+
+
+class CompPieceTokenizer(object):
+  """Runs WordPiece tokenziation."""
+
+  def __init__(self, vocab, unk_token="[UNK]", max_input_chars_per_word=200):
+    self.vocab = vocab
+    self.unk_token = unk_token
+    self.max_input_chars_per_word = max_input_chars_per_word
+    self.comp_dict = dict()
+    with open("chise-ids/IDS-UCS-Basic.txt", "r", encoding="utf-8") as chaizi:
+      pattern = re.compile('&[A-Z0-9-]+;|.')
+      chaizi.readline()
+      for line in chaizi:
+        l = line.rstrip().split('\t')
+        if l[1] == l[2]:
+          continue
+        comp_str = l[2]
+        comp_list = re.findall(pattern, comp_str)
+        self.comp_dict[l[1]] = comp_list
+
+  def tokenize(self, text):
+    """Tokenizes char into its components.
+
+For example:
+  input = "园"
+  output = ["园", "##⿴", "##囗", "##元"]
+
+Args:
+  text: A single token or whitespace separated tokens. This should have
+    already been passed through `BasicTokenizer.
+
+Returns:
+  A list of wordpiece tokens.
+"""
+
+    text = convert_to_unicode(text)
+
+    output_tokens = []
+    for token in whitespace_tokenize(text):
+      chars = list(token)
+      if len(chars) > self.max_input_chars_per_word:
+        output_tokens.append(self.unk_token)
+        continue
+
+      if len(chars) == 1:
+        char = chars[0]
+        if '\u4e00' <= char <= '\u9fff':
+          output_tokens.append(char)
+          comp_list = self.comp_dict.get(char)
+          if comp_list:
+            for comp in comp_list:
+              output_tokens.append("##" + comp)
+          continue
+
+      is_bad = False
+      start = 0
+      sub_tokens = []
+      while start < len(chars):
+        end = len(chars)
+        cur_substr = None
+        while start < end:
+          substr = "".join(chars[start:end])
+          if start > 0:
+            substr = "##" + substr
+          if substr in self.vocab:
+            cur_substr = substr
+            break
+          end -= 1
+        if cur_substr is None:
+          is_bad = True
+          break
+        sub_tokens.append(cur_substr)
+        start = end
+
+      if is_bad:
+        output_tokens.append(self.unk_token)
+      else:
+        output_tokens.extend(sub_tokens)
+    return output_tokens
