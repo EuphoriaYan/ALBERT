@@ -198,7 +198,10 @@ def load_vocab(vocab_file):
       token = convert_to_unicode(reader.readline())
       if not token:
         break
-      token = token.strip().split()[0]
+      token = token.strip()
+      if not token:
+        continue
+      token = token.split()[0]
       if token not in vocab:
         vocab[token] = len(vocab)
   return vocab
