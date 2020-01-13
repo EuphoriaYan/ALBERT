@@ -219,7 +219,7 @@ def create_float_feature(values):
   return feature
 
 
-def __merge_symmetry(sentences, symmetry=('“', '”')):
+def __merge_symmetry(sentences, symmetry=('「', '」')):
   '''合并对称符号，如双引号'''
   effective_ = []
   merged = True
@@ -240,14 +240,14 @@ def __merge_symmetry(sentences, symmetry=('“', '”')):
 
 def to_sentences(paragraph):
   """由段落切分成句子"""
-  sentences = re.split(r"(？|。|！|\…\…)", paragraph)
+  sentences = re.split(r"(？|。|！|……)", paragraph)
   sentences.append("")
   sentences = ["".join(i) for i in zip(sentences[0::2], sentences[1::2])]
   sentences = [i.strip() for i in sentences if len(i.strip()) > 0]
 
   for j in range(1, len(sentences)):
-    if sentences[j][0] == '”':
-      sentences[j - 1] = sentences[j - 1] + '”'
+    if sentences[j][0] == '」':
+      sentences[j - 1] = sentences[j - 1] + '」'
       sentences[j] = sentences[j][1:]
 
   return __merge_symmetry(sentences)
