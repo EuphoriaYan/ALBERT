@@ -123,3 +123,7 @@ chise-ids/
 
 # Corpus
 corpus/
+简体/
+
+# Output
+output/
