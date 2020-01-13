@@ -27,6 +27,7 @@ import six
 from six.moves import range
 from six.moves import zip
 import tensorflow as tf
+import re
 
 flags = tf.flags
 
@@ -218,6 +219,40 @@ def create_float_feature(values):
   return feature
 
 
+def __merge_symmetry(sentences, symmetry=('“', '”')):
+  '''合并对称符号，如双引号'''
+  effective_ = []
+  merged = True
+  for index in range(len(sentences)):
+    if symmetry[0] in sentences[index] and symmetry[1] not in sentences[index]:
+      merged = False
+      effective_.append(sentences[index])
+    elif symmetry[1] in sentences[index] and not merged:
+      merged = True
+      effective_[-1] += sentences[index]
+    elif symmetry[0] not in sentences[index] and symmetry[1] not in sentences[index] and not merged:
+      effective_[-1] += sentences[index]
+    else:
+      effective_.append(sentences[index])
+
+  return [i.strip() for i in effective_ if len(i.strip()) > 0]
+
+
+def to_sentences(paragraph):
+  """由段落切分成句子"""
+  sentences = re.split(r"(？|。|！|\…\…)", paragraph)
+  sentences.append("")
+  sentences = ["".join(i) for i in zip(sentences[0::2], sentences[1::2])]
+  sentences = [i.strip() for i in sentences if len(i.strip()) > 0]
+
+  for j in range(1, len(sentences)):
+    if sentences[j][0] == '”':
+      sentences[j - 1] = sentences[j - 1] + '”'
+      sentences[j] = sentences[j][1:]
+
+  return __merge_symmetry(sentences)
+
+
 def create_training_instances(input_files, tokenizer, max_seq_length,
                               dupe_factor, short_seq_prob, masked_lm_prob,
                               max_predictions_per_seq, rng):
@@ -236,7 +271,9 @@ def create_training_instances(input_files, tokenizer, max_seq_length,
         line = reader.readline()
         if not FLAGS.spm_model_file:
           line = tokenization.convert_to_unicode(line)
+        # EOF is used as document delimiters
         if not line:
+          all_documents.append([])
           break
         if FLAGS.spm_model_file:
           line = tokenization.preprocess_text(line, lower=FLAGS.do_lower_case)
@@ -246,9 +283,11 @@ def create_training_instances(input_files, tokenizer, max_seq_length,
         # Empty lines are used as document delimiters
         if not line:
           all_documents.append([])
-        tokens = tokenizer.tokenize(line)
-        if tokens:
-          all_documents[-1].append(tokens)
+        sentences = to_sentences(line)
+        for i in sentences:
+          tokens = tokenizer.tokenize(i)
+          if tokens:
+            all_documents[-1].append(tokens)
 
   # Remove empty documents
   all_documents = [x for x in all_documents if x]
@@ -626,8 +665,7 @@ def main(_):
   if FLAGS.use_comp_tokenizer:
     tokenizer =tokenization.CompTokenizer(
       vocab_file=FLAGS.vocab_file,
-      do_lower_case=FLAGS.do_lower_case,
-      spm_model_file=FLAGS.spm_model_file)
+      do_lower_case=FLAGS.do_lower_case)
   else:
     tokenizer = tokenization.FullTokenizer(
       vocab_file=FLAGS.vocab_file,
