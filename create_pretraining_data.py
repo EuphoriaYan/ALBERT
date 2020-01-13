@@ -89,8 +89,9 @@ flags.DEFINE_float(
     "Probability of creating sequences which are shorter than the "
     "maximum length.")
 
+# Our own parameter
 flags.DEFINE_bool(
-    "use_comp_tokenizer", True,
+    "use_comp_tokenizer", False,
     "Use Component tokenizer to pre-train Comp-ALBERT."
 )
 
