@@ -621,7 +621,7 @@ def truncate_seq_pair(tokens_a, tokens_b, max_num_tokens, rng):
 
 
 def main(_):
-  tf.logging.set_verbosity(tf.logging.ERROR)
+  tf.logging.set_verbosity(tf.logging.INFO)
 
   if FLAGS.use_comp_tokenizer:
     tokenizer =tokenization.CompTokenizer(
