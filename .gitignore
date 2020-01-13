@@ -115,6 +115,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
 # Pycharm project
 .idea/
+
+# Dataset
+chise-ids/
+
+# Corpus
+corpus/
