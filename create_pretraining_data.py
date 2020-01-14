@@ -220,7 +220,7 @@ def create_float_feature(values):
 
 
 def __merge_symmetry(sentences, symmetry=('「', '」')):
-  '''合并对称符号，如双引号'''
+  '''merge symmetry symbol, maybe useful?'''
   effective_ = []
   merged = True
   for index in range(len(sentences)):
@@ -250,7 +250,8 @@ def to_sentences(paragraph):
       sentences[j - 1] = sentences[j - 1] + '」'
       sentences[j] = sentences[j][1:]
 
-  return __merge_symmetry(sentences)
+  # return __merge_symmetry(sentences)
+  return sentences
 
 
 def create_training_instances(input_files, tokenizer, max_seq_length,
