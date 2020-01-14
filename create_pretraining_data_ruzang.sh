@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-input_file=corpus/classified_corpus/daizhige/诗藏_combine_ft.txt
-output_file=output/shi1zang_data.tfrecord1,output/shi1zang_data.tfrecord2
+input_file=corpus/classified_corpus/daizhige/儒藏_combine_ft.txt
+output_file=output/ruzang_data.tfrecord
 vocab_file=vocab2.txt
 
 
