@@ -69,7 +69,8 @@ flags.DEFINE_bool(
     "as the negative sample for next sentence prection, rather than using "
     "sentences from other random documents.")
 
-flags.DEFINE_integer("max_seq_length", 512, "Maximum sequence length.")
+# initial parameter is 512, choose 128 instead.
+flags.DEFINE_integer("max_seq_length", 128, "Maximum sequence length.")
 
 flags.DEFINE_integer("ngram", 3, "Maximum number of ngrams to mask.")
 
