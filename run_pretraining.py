@@ -28,6 +28,8 @@ from tensorflow.contrib import cluster_resolver as contrib_cluster_resolver
 from tensorflow.contrib import data as contrib_data
 from tensorflow.contrib import tpu as contrib_tpu
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
+
 flags = tf.flags
 
 FLAGS = flags.FLAGS
@@ -51,8 +53,9 @@ flags.DEFINE_string(
     "init_checkpoint", None,
     "Initial checkpoint (usually from a pre-trained ALBERT model).")
 
+# initial parameter is 512, choose 128 instead.
 flags.DEFINE_integer(
-    "max_seq_length", 512,
+    "max_seq_length", 128,
     "The maximum total input sequence length after WordPiece tokenization. "
     "Sequences longer than this will be truncated, and sequences shorter "
     "than this will be padded. Must match data generation.")
