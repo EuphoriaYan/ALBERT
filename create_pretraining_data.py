@@ -250,6 +250,9 @@ def to_sentences(paragraph):
     if sentences[j][0] == '」':
       sentences[j - 1] = sentences[j - 1] + '」'
       sentences[j] = sentences[j][1:]
+    elif sentences[j][0] == '”':
+      sentences[j - 1] = sentences[j - 1] + '”'
+      sentences[j - 1] = sentences[j][1:]
 
   # return __merge_symmetry(sentences)
   return sentences
