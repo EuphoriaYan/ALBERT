@@ -8,7 +8,8 @@ output/leishu.tfrecord1,\
 output/ruzang_data.tfrecord,\
 output/shi1zang_data.tfrecord1,output/shi1zang_data.tfrecord2,\
 output/shi3zang_data.tfrecord1,\output/shi3zang_data.tfrecord2,output/shi3zang_data.tfrecord3,\
-output/zizang_data.tfrecord1
+output/zizang_data.tfrecord1,\
+output/zongji.tfrecord1,output/zongji.tfrecord2,output/zongji.tfrecord3
 output_file=output
 
 python run_pretraining.py \
