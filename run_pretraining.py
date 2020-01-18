@@ -69,9 +69,9 @@ flags.DEFINE_bool("do_train", True, "Whether to run training.")
 
 flags.DEFINE_bool("do_eval", False, "Whether to run eval on the dev set.")
 
-flags.DEFINE_integer("train_batch_size", 128, "Total batch size for training.")
+flags.DEFINE_integer("train_batch_size", 32, "Total batch size for training.")
 
-flags.DEFINE_integer("eval_batch_size", 64, "Total batch size for eval.")
+flags.DEFINE_integer("eval_batch_size", 32, "Total batch size for eval.")
 
 flags.DEFINE_enum("optimizer", "lamb", ["adamw", "lamb"],
                   "The optimizer for training.")
