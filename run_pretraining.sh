@@ -10,9 +10,9 @@ output/shi1zang_data.tfrecord1,output/shi1zang_data.tfrecord2,\
 output/shi3zang_data.tfrecord1,\output/shi3zang_data.tfrecord2,output/shi3zang_data.tfrecord3,\
 output/zizang_data.tfrecord1,\
 output/zongji.tfrecord1,output/zongji.tfrecord2,output/zongji.tfrecord3
-output_file=output
+output_dir=output
 
 python run_pretraining.py \
 --albert_config_file ${albert_config_file} \
 --input_file ${input_file} \
---output_file ${output_file}
+--output_dir ${output_dir}
