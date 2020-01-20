@@ -11,6 +11,7 @@ output/shi3zang_data.tfrecord1,\output/shi3zang_data.tfrecord2,output/shi3zang_d
 output/zizang_data.tfrecord1,\
 output/zongji.tfrecord1,output/zongji.tfrecord2,output/zongji.tfrecord3
 output_dir=output
+ckpt_path=./albert_base_zh/albert_model.ckpt
 
 python run_pretraining.py \
 --albert_config_file ${albert_config_file} \
@@ -18,4 +19,4 @@ python run_pretraining.py \
 --output_dir ${output_dir} \
 --do_train True \
 --do_eval True \
---init_checkpoint albert_base_zh/albert_model.ckpt
+--init_checkpoint ${ckpt_path}
