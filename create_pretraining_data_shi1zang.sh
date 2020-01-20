@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 input_file=corpus/classified_corpus/daizhige/诗藏_combine_ft.txt
 output_file=output/shi1zang_data.tfrecord1,output/shi1zang_data.tfrecord2
-vocab_file=vocab2.txt
+vocab_file=vocab.txt
 
 
 python create_pretraining_data.py \

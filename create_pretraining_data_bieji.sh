@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 input_file=corpus/classified_corpus/zh/bieji.txt
 output_file=output/bieji.tfrecord1,output/bieji.tfrecord2,output/bieji.tfrecord3
-vocab_file=vocab2.txt
+vocab_file=vocab.txt
 
 
 python create_pretraining_data.py \

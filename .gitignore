@@ -130,3 +130,6 @@ output/
 
 # Test
 test.py
+
+# Pre-trained model
+albert_base_zh/

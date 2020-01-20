@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 input_file=corpus/classified_corpus/zh/ci_qu_shi.txt
 output_file=output/ci_qu_shi.tfrecord1
-vocab_file=vocab2.txt
+vocab_file=vocab.txt
 
 
 python create_pretraining_data.py \

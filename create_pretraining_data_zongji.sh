@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 input_file=corpus/classified_corpus/zh/zongji.txt
 output_file=output/zongji.tfrecord1,output/zongji.tfrecord2,output/zongji.tfrecord3
-vocab_file=vocab2.txt
+vocab_file=vocab.txt
 
 
 python create_pretraining_data.py \
