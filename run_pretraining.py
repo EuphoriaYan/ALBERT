@@ -80,13 +80,13 @@ flags.DEFINE_float("learning_rate", 0.00176, "The initial learning rate.")
 
 flags.DEFINE_float("poly_power", 1.0, "The power of poly decay.")
 
-flags.DEFINE_integer("num_train_steps", 125000, "Number of training steps.")
+flags.DEFINE_integer("num_train_steps", 1000000, "Number of training steps.")
 
-flags.DEFINE_integer("num_warmup_steps", 3125, "Number of warmup steps.")
+flags.DEFINE_integer("num_warmup_steps", 25000, "Number of warmup steps.")
 
 flags.DEFINE_integer("start_warmup_step", 0, "The starting step of warmup.")
 
-flags.DEFINE_integer("save_checkpoints_steps", 5000,
+flags.DEFINE_integer("save_checkpoints_steps", 100000,
                      "How often to save the model checkpoint.")
 
 flags.DEFINE_integer("keep_checkpoint_max", 5,

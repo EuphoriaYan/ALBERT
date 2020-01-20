@@ -15,4 +15,7 @@ output_dir=output
 python run_pretraining.py \
 --albert_config_file ${albert_config_file} \
 --input_file ${input_file} \
---output_dir ${output_dir}
+--output_dir ${output_dir} \
+--do_train True \
+--do_eval True \
+--init_checkpoint albert_base_zh/albert_model.ckpt
