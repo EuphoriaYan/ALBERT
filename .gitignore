@@ -133,3 +133,4 @@ test.py
 
 # Pre-trained model
 albert_base_zh/
+albert_base/
