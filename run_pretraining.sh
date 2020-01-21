@@ -11,7 +11,7 @@ output/shi3zang_data.tfrecord1,\output/shi3zang_data.tfrecord2,output/shi3zang_d
 output/zizang_data.tfrecord1,\
 output/zongji.tfrecord1,output/zongji.tfrecord2,output/zongji.tfrecord3
 output_dir=output
-ckpt_path=./albert_base_zh/albert_model.ckpt
+ckpt_path=./albert_base/model.ckpt-best
 
 python run_pretraining.py \
 --albert_config_file ${albert_config_file} \
