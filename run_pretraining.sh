@@ -10,7 +10,7 @@ output/shi1zang_data.tfrecord1,output/shi1zang_data.tfrecord2,\
 output/shi3zang_data.tfrecord1,\output/shi3zang_data.tfrecord2,output/shi3zang_data.tfrecord3,\
 output/zizang_data.tfrecord1,\
 output/zongji.tfrecord1,output/zongji.tfrecord2,output/zongji.tfrecord3
-output_dir=model_output
+output_dir=adamw_model_output
 ckpt_path=./albert_base/model.ckpt-best
 
 python run_pretraining.py \
