@@ -22,5 +22,6 @@ python run_pretraining.py \
 --init_checkpoint ${ckpt_path} \
 --num_train_steps 1000000 \
 --num_warmup_steps 20000 \
---learning_rate 1e-4
+--optimizer adamw \
+--learning_rate 5e-5
 
