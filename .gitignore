@@ -127,6 +127,7 @@ corpus/
 
 # Output
 output/
+model_output/
 
 # Test
 test.py
