@@ -10,7 +10,7 @@ output/shi1zang_data.tfrecord1,output/shi1zang_data.tfrecord2,\
 output/shi3zang_data.tfrecord1,\output/shi3zang_data.tfrecord2,output/shi3zang_data.tfrecord3,\
 output/zizang_data.tfrecord1,\
 output/zongji.tfrecord1,output/zongji.tfrecord2,output/zongji.tfrecord3
-output_dir=output
+output_dir=model_output
 ckpt_path=./albert_base/model.ckpt-best
 
 python run_pretraining.py \
@@ -19,4 +19,8 @@ python run_pretraining.py \
 --output_dir ${output_dir} \
 --do_train True \
 --do_eval True \
---init_checkpoint ${ckpt_path}
+--init_checkpoint ${ckpt_path} \
+--num_train_steps 1000000 \
+--num_warmup_steps 20000 \
+--learning_rate 1e-4
+
