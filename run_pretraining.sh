@@ -23,5 +23,6 @@ python run_pretraining.py \
 --num_train_steps 1000000 \
 --num_warmup_steps 20000 \
 --optimizer adamw \
---learning_rate 5e-5
+--learning_rate 5e-5 \
+--cuda_visible_devices 1
 

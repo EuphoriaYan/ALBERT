@@ -28,11 +28,15 @@ from tensorflow.contrib import cluster_resolver as contrib_cluster_resolver
 from tensorflow.contrib import data as contrib_data
 from tensorflow.contrib import tpu as contrib_tpu
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
-
 flags = tf.flags
 
 FLAGS = flags.FLAGS
+
+## Cuda parameters
+flags.DEFINE_string(
+    "cuda_visible_devices", "1",
+    "Use which cuda devices to pre-train ALBERT model."
+)
 
 ## Required parameters
 flags.DEFINE_string(
@@ -471,6 +475,7 @@ def _decode_record(record, name_to_features):
 
 
 def main(_):
+  os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.CUDA_VISIBLE_DEVICES
   tf.logging.set_verbosity(tf.logging.INFO)
 
   if not FLAGS.do_train and not FLAGS.do_eval:
