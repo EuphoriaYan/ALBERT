@@ -475,7 +475,7 @@ def _decode_record(record, name_to_features):
 
 
 def main(_):
-  os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.CUDA_VISIBLE_DEVICES
+  os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.cuda_visible_devices
   tf.logging.set_verbosity(tf.logging.INFO)
 
   if not FLAGS.do_train and not FLAGS.do_eval:
